@@ -19,7 +19,7 @@ app.use(express.json())
 // cors:we can access any backend from frontend 
 
 app.use(cors())
-
+//cors basically allows you to work in place with front n backend
 
 // db connection 
 connectDB();
