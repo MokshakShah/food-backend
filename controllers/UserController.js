@@ -5,7 +5,7 @@ import validator from "validator"
 
 //jsonwebtoken: Securely authenticate users.
 //bcrypt: User data privacy saver
-//validator: Checks email and password are valide or not
+//validator: Checks email and password are valide or not if they are invalid they deny the purchase
 
 
 const loginUser = async (req,res)=>{
