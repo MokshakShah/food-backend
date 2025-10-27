@@ -19,6 +19,7 @@ app.use(cors({
     "http://localhost:3000",
     "http://localhost:5173",
     "https://food-frontend-brown.vercel.app", // Customer site
+    'https://food-backend-0lzh.onrender.com',
     "https://food-admin-liart.vercel.app"    // Admin panel
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
