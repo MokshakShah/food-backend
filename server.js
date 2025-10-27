@@ -1,43 +1,47 @@
-import express from "express"
-import cors from "cors"
-import { connectDB } from "./config/db.js"
-import foodRouter from "./routes/foodRoute.js"
-import userRouter from "./routes/userRoute.js"
-import 'dotenv/config'
-import cartRouter from "./routes/cartRoute.js"
-import orderRouter from "./routes/orderRoute.js"
+import express from "express";
+import cors from "cors";
+import { connectDB } from "./config/db.js";
+import foodRouter from "./routes/foodRoute.js";
+import userRouter from "./routes/userRoute.js";
+import 'dotenv/config';
+import cartRouter from "./routes/cartRoute.js";
+import orderRouter from "./routes/orderRoute.js";
 
-
-//app config
-const app = express()
-const port = process.env.PORT || 4000
+// app config
+const app = express();
+const port = process.env.PORT || 4000;
 
 // middleware
+app.use(express.json());
 
-app.use(express.json())
-
-// cors:we can access any backend from frontend 
-
-app.use(cors())
-//cors basically allows you to work in place with front n backend
+// ✅ Fixed CORS Configuration
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "https://food-frontend-brown.vercel.app", // Customer Frontend
+    "https://food-admin-liart.vercel.app"     // Admin Panel
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 // db connection 
 connectDB();
 
-//api endpoints
-app.use("/api/food",foodRouter)
-app.use("/images",express.static('uploads'))
-app.use("/api/user",userRouter)
-app.use("/api/cart",cartRouter)
-// images ka use ye hai ki jab hum image upload karte hai to wo uploads folder me chala jata hai aur use hum http://localhost:4000/images/filename se access kar sakte hai
-app.use("/api/order",orderRouter)
+// api endpoints
+app.use("/api/food", foodRouter);
+app.use("/images", express.static("uploads"));
+app.use("/api/user", userRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/order", orderRouter);
 
-app.get("/",(req,res)=>{
-  res.send("API  Working")
-})
+// test route
+app.get("/", (req, res) => {
+  res.send("API Working ✅");
+});
 
-app.listen(port,()=>{
-  console.log(`Server Started on http://localhost:${port}`);
-  
-})
-
+// start server
+app.listen(port, () => {
+  console.log(`Server Running → http://localhost:${port}`);
+});
