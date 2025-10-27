@@ -7,41 +7,39 @@ import 'dotenv/config';
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 
-// app config
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// middleware
-app.use(express.json());
-
-//Cors values
+// CORS must come before routes
 app.use(cors({
   origin: [
-    "http://localhost:3000",
     "http://localhost:5173",
-    "https://food-frontend-brown.vercel.app", // Customer site
-    "https://food-admin-liart.vercel.app"     // Admin panel
+    "http://localhost:3000",
+    "https://food-frontend-brown.vercel.app",
+    "https://food-admin-liart.vercel.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
 
-// db connection 
+app.use(express.json());
+
+// 🔥 Connect Database
 connectDB();
 
-// api endpoints
+// 🛣 API Routes
 app.use("/api/food", foodRouter);
 app.use("/images", express.static("uploads"));
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 
-// test route
+// Test Route
 app.get("/", (req, res) => {
   res.send("API Working ✅");
 });
 
-//FOR RENDER (Start Server)
+//  Start Server 
 app.listen(PORT, () => {
   console.log(`🔥 Server running on port ${PORT}`);
 });
