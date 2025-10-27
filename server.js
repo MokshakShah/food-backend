@@ -9,18 +9,18 @@ import orderRouter from "./routes/orderRoute.js";
 
 // app config
 const app = express();
+const PORT = process.env.PORT || 4000;
 
 // middleware
 app.use(express.json());
 
-// ✅ CORS FIX (allowed frontend + admin)
+//Cors values
 app.use(cors({
   origin: [
     "http://localhost:3000",
     "http://localhost:5173",
     "https://food-frontend-brown.vercel.app", // Customer site
-    'https://food-backend-0lzh.onrender.com',
-    "https://food-admin-liart.vercel.app"    // Admin panel
+    "https://food-admin-liart.vercel.app"     // Admin panel
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
@@ -41,5 +41,7 @@ app.get("/", (req, res) => {
   res.send("API Working ✅");
 });
 
-
-export default app;
+//FOR RENDER (Start Server)
+app.listen(PORT, () => {
+  console.log(`🔥 Server running on port ${PORT}`);
+});
